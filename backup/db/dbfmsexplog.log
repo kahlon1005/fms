@@ -1,0 +1,70 @@
+
+Connected to: Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+Export done in WE8MSWIN1252 character set and AL16UTF16 NCHAR character set
+
+About to export specified users ...
+. exporting pre-schema procedural objects and actions
+. exporting foreign function library names for user FMSDEV 
+. exporting PUBLIC type synonyms
+. exporting private type synonyms
+. exporting object type definitions for user FMSDEV 
+About to export FMSDEV's objects ...
+. exporting database links
+. exporting sequence numbers
+. exporting cluster definitions
+. about to export FMSDEV's tables via Conventional Path ...
+. . exporting table                    CREDIT_CARD          0 rows exported
+. . exporting table                  CURRENCY_BASE          3 rows exported
+. . exporting table                  CUSTOMER_INFO         45 rows exported
+. . exporting table                   CUST_ADDRESS         19 rows exported
+. . exporting table                   CUST_RECEIPT        528 rows exported
+. . exporting table                 DEMO_CUSTOMERS          7 rows exported
+. . exporting table                    DEMO_ORDERS         10 rows exported
+. . exporting table               DEMO_ORDER_ITEMS         16 rows exported
+. . exporting table            DEMO_PAGE_HIERARCHY         17 rows exported
+. . exporting table              DEMO_PRODUCT_INFO         10 rows exported
+. . exporting table                    DEMO_STATES         51 rows exported
+. . exporting table                     DEMO_USERS          2 rows exported
+. . exporting table                           DEPT          4 rows exported
+. . exporting table                            EMP         14 rows exported
+. . exporting table                  EMPLOYEE_ACCT          0 rows exported
+. . exporting table                  EMPLOYEE_INFO         27 rows exported
+. . exporting table                 EQUIPMENT_INFO         51 rows exported
+. . exporting table                     EQUIP_FUEL        130 rows exported
+. . exporting table                    EQUIP_MAINT         55 rows exported
+. . exporting table                    FMS_COMPANY          3 rows exported
+. . exporting table                    FMS_CONTROL          0 rows exported
+. . exporting table                   FMS_EXPENSES          0 rows exported
+. . exporting table                    FMS_PAYMENT          0 rows exported
+. . exporting table                     FMS_PERIOD         95 rows exported
+. . exporting table                  FMS_SEQUENCES          9 rows exported
+. . exporting table                   FMS_SUPPLIER         12 rows exported
+. . exporting table                      FUEL_CARD          1 rows exported
+. . exporting table                    FUEL_RELOAD         36 rows exported
+. . exporting table                       FUEL_TRX         16 rows exported
+. . exporting table                        INVOICE        544 rows exported
+. . exporting table                      LOCATIONS         46 rows exported
+. . exporting table                     ORDER_INFO       8331 rows exported
+. . exporting table                 SHIP_TO_MASTER        380 rows exported
+. . exporting table                   SUPP_INVOICE          0 rows exported
+. . exporting table                       SUPP_TRX       2666 rows exported
+. . exporting table                   SUPP_TRX_BAK         94 rows exported
+. . exporting table                   TARIFF_CODES         13 rows exported
+. . exporting table                   TARIFF_RATES       4353 rows exported
+. exporting synonyms
+. exporting views
+. exporting stored procedures
+. exporting operators
+. exporting referential integrity constraints
+. exporting triggers
+. exporting indextypes
+. exporting bitmap, functional and extensible indexes
+. exporting posttables actions
+. exporting materialized views
+. exporting snapshot logs
+. exporting job queues
+. exporting refresh groups and children
+. exporting dimensions
+. exporting post-schema procedural objects and actions
+. exporting statistics
+Export terminated successfully without warnings.

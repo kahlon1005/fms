@@ -1,0 +1,239 @@
+CREATE OR REPLACE PACKAGE fms_package IS
+
+  PROCEDURE gen_cust_invoice (
+  			p_cust_id IN customer_info.CUSTOMER_ID%type, 
+  			o_msg OUT VARCHAR2
+  			);
+  
+  PROCEDURE gen_invoice (o_msg OUT VARCHAR2);
+ 
+  PROCEDURE upt_invoice (p_inv_no      IN    invoice.inv_no%type,
+                         o_msg         OUT   VARCHAR2
+                        );
+
+  PROCEDURE gen_salary (p_period	IN VARCHAR2);
+
+  FUNCTION get_seq_val(p_seq_name IN fms_sequences.seq_name%TYPE)  RETURN NUMBER;
+	
+  FUNCTION get_AED_amount(p_curr  IN  VARCHAR2,	p_amount  IN  NUMBER)  RETURN NUMBER;
+
+  PROCEDURE print_invoice(p_inv_no IN NUMBER);
+
+
+END fms_package;
+/
+
+
+CREATE OR REPLACE PACKAGE BODY fms_package IS
+
+  inv_ctr number :=0;
+
+
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this procedure is to genrate salary for employees
+
+------------------------------------------------------------------------------------------------------------*/
+
+	PROCEDURE gen_salary (p_period	IN VARCHAR2) as
+	
+	BEGIN
+	
+	  INSERT INTO employee_acct(employee_id,equipment_id,period,trx_type,trx_sub_type,curr,amount,aed_amount)	  
+		SELECT b.employee_id,c.equipment_id,period,'SALARY','Comm','AED',sum(oper_comm),sum(oper_comm)
+		FROM order_info a, employee_info b,equipment_info c
+		WHERE period = p_period	  
+		and a.operator = b.employee_name
+		and a.equipment= c.equipment_name
+		group by b.employee_id,c.equipment_id,period;
+	
+	END gen_salary;
+	
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this procedure is to genrate invoices
+
+------------------------------------------------------------------------------------------------------------*/
+
+	
+  PROCEDURE gen_invoice (o_msg OUT VARCHAR2) AS   
+ 
+        
+   cursor c1 is
+   select CUSTOMER_ID,COMP_ID from CUSTOMER_INFO a
+   where exists(
+     select 1
+     from order_info b
+     where b.CUSTOMER_ID = a.CUSTOMER_ID
+     and INV_NO IS NULL);
+
+  BEGIN
+   
+   for c1_rec in c1 loop
+     gen_cust_invoice(c1_rec.CUSTOMER_ID,o_msg);     
+     inv_ctr := inv_ctr +1;
+   end loop;
+
+   o_msg := 'Total Invoices Generated '||inv_ctr;
+   dbms_output.put_line(o_msg);
+   commit;
+
+  EXCEPTION
+    WHEN no_data_found THEN
+    o_msg := 'No Orders Exists for invoicing';
+  END ;
+  
+
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this procedure is to genrate customer invoices
+
+------------------------------------------------------------------------------------------------------------*/
+	
+  PROCEDURE gen_cust_invoice (
+  			p_cust_id IN customer_info.CUSTOMER_ID%type, 
+  			o_msg OUT VARCHAR2
+  			)
+  AS 
+	 
+   
+   m_inv_no number;  
+  
+   cursor c1 is
+   select CUSTOMER_ID,COMP_ID,COMPANY_NAME from CUSTOMER_INFO a
+   where customer_id = p_cust_id
+     and exists(
+     select 1
+     from order_info b
+     where b.CUSTOMER_ID = a.CUSTOMER_ID
+     and INV_NO IS NULL);
+
+  BEGIN
+   
+   for c1_rec in c1 loop
+   
+     m_inv_no := get_seq_val('INVOICE_SEQ');
+  
+     INSERT into INVOICE (INV_NO,INV_DATE,CUSTOMER_ID,CUSTOMER_NAME,INV_CURR,CURR_RATE,INV_AMOUNT,ADD_CHR,AED_AMOUNT,TRIP,COMP_ID)
+     select m_INV_NO,SYSDATE,CUSTOMER_ID,CUSTOMER_NAME,ORD_CURR,CURR_RATE,
+     sum(ORDER_AMOUNT) INV_AMOUNT,sum(ADD_CHR),sum(CURR_RATE*(ORDER_AMOUNT+ADD_CHR)) AED_AMOUNT,count(ORDER_NO) TRIP,
+     c1_rec.COMP_ID
+     from order_info
+     where CUSTOMER_ID = c1_rec.CUSTOMER_ID
+     and INV_NO IS NULL
+     group by m_INV_NO,SYSDATE,CUSTOMER_ID,CUSTOMER_NAME,ORD_CURR,CURR_RATE;
+     
+     
+     update order_info
+     set inv_no = m_inv_no
+     where CUSTOMER_ID = c1_rec.CUSTOMER_ID
+     and INV_NO IS NULL;
+     
+     o_msg := 'Invoices Generated for '||c1_rec.COMPANY_NAME;       
+   end loop;
+
+   
+   dbms_output.put_line(o_msg);
+   commit;
+
+  EXCEPTION
+    WHEN no_data_found THEN
+    o_msg := 'No Orders found for invoicing';
+  END ;
+  
+
+
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this procedure is to update invoices
+
+------------------------------------------------------------------------------------------------------------*/
+
+	
+  PROCEDURE upt_invoice (p_inv_no      IN    invoice.inv_no%type,
+                         o_msg         OUT   VARCHAR2
+                        ) 
+  AS   
+ 
+
+  BEGIN
+  
+     UPDATE INVOICE a
+     SET (INV_AMOUNT,ADD_CHR,AED_AMOUNT,TRIP ) = (
+     select 
+     sum(ORDER_AMOUNT) INV_AMOUNT,sum(ADD_CHR),sum(CURR_RATE*(ORDER_AMOUNT+ADD_CHR)) AED_AMOUNT,count(ORDER_NO) TRIP
+     from order_info b
+     where b.INV_NO = a.INV_NO)
+     WHERE INV_NO = p_inv_no;
+     
+     commit;
+
+    o_msg := 'invoice '||p_inv_no||' updated';
+
+  EXCEPTION
+    WHEN no_data_found THEN
+    o_msg := 'invoice not found';
+  END ;
+
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this function is to return the sequence next value.
+
+------------------------------------------------------------------------------------------------------------*/
+
+FUNCTION get_seq_val(p_seq_name IN fms_sequences.seq_name%TYPE)	RETURN NUMBER AS
+	
+	m_next_val fms_sequences.next_val%TYPE;
+	  
+BEGIN	
+	
+  SELECT next_val INTO m_next_val FROM fms_sequences
+  WHERE seq_name = p_seq_name;
+
+  UPDATE fms_sequences
+  SET next_val = nvl(next_val,start_val) +incr_val
+  WHERE seq_name = p_seq_name;
+  
+
+RETURN m_next_val;
+END get_seq_val;
+  
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this function is to return AED Amount.
+
+------------------------------------------------------------------------------------------------------------*/
+
+  FUNCTION get_AED_amount(p_curr IN  VARCHAR2,p_amount IN NUMBER) RETURN NUMBER AS
+  
+    aed_amount NUMBER;
+  
+  BEGIN  
+    
+    SELECT curr_rate * p_amount into aed_amount FROM currency_base
+    WHERE curr_name = p_curr;
+  
+  RETURN aed_amount;
+	END get_AED_amount;
+	
+
+/*----------------------------------------------------------------------------------------------------------
+The purpose of this procedure is to update print flag of invoice
+
+------------------------------------------------------------------------------------------------------------*/
+
+  PROCEDURE print_invoice(p_inv_no IN NUMBER) IS
+
+  BEGIN
+  
+    update invoice
+    set print_ind = 'Y'
+    where inv_no = p_inv_no
+    and print_ind is null;
+
+    commit;
+
+  EXCEPTION
+  when OTHERS then
+  
+    Null;
+
+  END;
+
+
+END fms_package;
+/

@@ -1,0 +1,40 @@
+create or replace trigger INSERT_RECEIPT
+BEFORE insert ON CUST_RECEIPT
+FOR EACH ROW
+DECLARE
+BEGIN
+IF INSERTING THEN
+  :new.RECT_NO := fms_package.get_seq_val('RECEIPT_SEQ');
+  update INVOICE
+  set RCPT_NO = :new.RECT_NO
+  where INV_NO = :new.INV_NO;
+ELSIF DELETING THEN
+  update INVOICE
+  set RCPT_NO = null
+  where INV_NO = :old.INV_NO;
+END IF;
+
+end;
+/*------------------------------------------------
+Create SUPPLIER TRANSACTION KEY
+------------------------------------------------*/
+create or replace trigger INSERT_SUPP_TRX
+BEFORE insert ON SUPP_TRX
+FOR EACH ROW
+DECLARE
+BEGIN
+IF INSERTING THEN
+  :new.TRX_ID := fms_package.get_seq_val('SUPP_TRX');
+end;
+--------------------------------------------------
+
+
+create or replace view EMPLOYEE_INFO
+as
+select EMP_NO EMPLOYEE_ID,SUPP_ID,SUPP_NAME EMPLOYEE_NAME, '01-JAN-07'  DOJ,
+'Y' EMPLOYEE_AVAIL, 'SUPPLIER' CATEGORY, 1 IMAGE_ID,
+'DESC' EMPLOYEE_DESCRIPTION, 2000 SALARY,ASSIGN_EQUIP
+from fms_supplier
+where EMP_NO is not null
+
+

@@ -17,7 +17,7 @@ About to export FMSDEV's objects ...
 . . exporting table                  CURRENCY_BASE          3 rows exported
 . . exporting table                  CUSTOMER_INFO         45 rows exported
 . . exporting table                   CUST_ADDRESS         19 rows exported
-. . exporting table                   CUST_RECEIPT        564 rows exported
+. . exporting table                   CUST_RECEIPT        580 rows exported
 . . exporting table                 DEMO_CUSTOMERS          7 rows exported
 . . exporting table                    DEMO_ORDERS         10 rows exported
 . . exporting table               DEMO_ORDER_ITEMS         16 rows exported
@@ -29,28 +29,28 @@ About to export FMSDEV's objects ...
 . . exporting table                            EMP         14 rows exported
 . . exporting table                  EMPLOYEE_ACCT          0 rows exported
 . . exporting table                  EMPLOYEE_INFO         28 rows exported
-. . exporting table                 EQUIPMENT_INFO         53 rows exported
+. . exporting table                 EQUIPMENT_INFO         57 rows exported
 . . exporting table                     EQUIP_FUEL        130 rows exported
 . . exporting table                    EQUIP_MAINT         55 rows exported
 . . exporting table                    FMS_COMPANY          3 rows exported
 . . exporting table                    FMS_CONTROL          0 rows exported
 . . exporting table                   FMS_EXPENSES          0 rows exported
 . . exporting table                    FMS_PAYMENT          0 rows exported
-. . exporting table                     FMS_PERIOD        100 rows exported
+. . exporting table                     FMS_PERIOD        103 rows exported
 . . exporting table                  FMS_SEQUENCES          9 rows exported
 . . exporting table                   FMS_SUPPLIER         12 rows exported
 . . exporting table                      FUEL_CARD          1 rows exported
 . . exporting table                    FUEL_RELOAD         36 rows exported
 . . exporting table                       FUEL_TRX         16 rows exported
-. . exporting table                        INVOICE        572 rows exported
-. . exporting table                      LOCATIONS         47 rows exported
-. . exporting table                     ORDER_INFO       8962 rows exported
-. . exporting table                 SHIP_TO_MASTER        390 rows exported
+. . exporting table                        INVOICE        590 rows exported
+. . exporting table                      LOCATIONS         49 rows exported
+. . exporting table                     ORDER_INFO       9369 rows exported
+. . exporting table                 SHIP_TO_MASTER        400 rows exported
 . . exporting table                   SUPP_INVOICE          0 rows exported
-. . exporting table                       SUPP_TRX       2812 rows exported
+. . exporting table                       SUPP_TRX       2944 rows exported
 . . exporting table                   SUPP_TRX_BAK         94 rows exported
-. . exporting table                   TARIFF_CODES         15 rows exported
-. . exporting table                   TARIFF_RATES       5297 rows exported
+. . exporting table                   TARIFF_CODES         18 rows exported
+. . exporting table                   TARIFF_RATES       5672 rows exported
 . exporting synonyms
 . exporting views
 . exporting stored procedures

@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1'?>
+<!DOCTYPE bridge PUBLIC "-//Oracle Corp.//DTD Reports Bridge Configuration //EN" "file:D:\DevSuiteHome_1/reports/dtd/bridgeconfig.dtd">
+<!-- port : Bridge will listen on the port for incoming requests.
+     timeout : Timeout value used for waiting for remote bridge response.
+     For proper operation of the bridge, multicast timeout and bridge timeout 
+     should be set properly. Please refer to the documentation for more details
+--> 
+     
+<bridge version="10.1.2" port="14011" timeout="1000">
+   <!--identifier encrypted="no" confidential="yes">%USERNAME%/</identifier-->
+   <!--networkConfig file="rwnetwork.conf" ></networkConfig-->
+   <!--trace traceOpts="trace_all"></trace-->
+   <!-- Specify one or more remote bridges inside remoteBridges element -->
+   <!--remoteBridges>
+      <remoteBridge host="%HOST%" port="%PORT%"></remoteBridge>
+   </remoteBridges-->
+</bridge>

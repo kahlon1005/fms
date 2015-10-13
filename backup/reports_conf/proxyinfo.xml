@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Oracle Reports Proxy configuration file -->
+
+<!DOCTYPE proxyInfo [
+<!ELEMENT proxyInfo (proxyServers, bypassProxy)>
+<!ELEMENT proxyServers (proxyServer*)>
+<!ELEMENT bypassProxy  (domain*)> 
+<!ELEMENT domain   (#PCDATA)>
+<!ELEMENT proxyServer  EMPTY>
+<!ATTLIST proxyServer name      CDATA #REQUIRED 
+                      port      CDATA #REQUIRED 
+                      protocol  ( http|https|ftp|all )  "all">
+
+]>
+
+<!--   
+     * You can specify proxy servers for any specific protocols or specify   *
+     * a single proxy server for all the valid protocols                     *
+     * The Example below specifies a proxy server specific to http           *
+     * protocol                                                              *
+     *                                                                       * 
+     * <proxyServer name="www.foo.com" port="80" protocol="http"/>           *
+     *                                                                       *
+     * The Example below specifies a proxy server for all valid              *
+     * protocols                                                             *
+     * <proxyServer name="www.foo.com" port="80" protocol="all"/>            *
+
+     * proxyInfo     : Element having all setting related to Proxy setting   *
+     * proxyServers  : Element having all the Proxy Server supported         * 
+     * proxyServer   : Element having attributes of the proxy server         *
+     * name          : Attibute having Name of the proxy Server              *
+     * port          : Attibute having  Port of the proxy Server             *
+     * protocol      : Protocol, for which the proxy server is supported     * 
+     * bypassProxy   : Element having all the servers for which proxy setting* 
+     *                 should not be used.                                   * 
+     * domain        : Element having name of the Server for which proxy     *
+     *                 setting should not be used.                           *
+     
+
+-->
+    
+<proxyInfo>
+   <proxyServers> 
+     <proxyServer name="your_proxy_server" port="port_number" protocol="all"/> 
+   </proxyServers>
+   <!-- 
+       * Enter domains which you do not want to be accessed via the proxy      *
+       * servers you have specified above                                      *
+   -->
+   <bypassProxy>
+      <domain>*.mydomain.com</domain>
+   </bypassProxy>
+</proxyInfo>
+

@@ -29,7 +29,7 @@ About to export FMSDEV's objects ...
 . . exporting table                            EMP         14 rows exported
 . . exporting table                  EMPLOYEE_ACCT          0 rows exported
 . . exporting table                  EMPLOYEE_INFO         30 rows exported
-. . exporting table                 EQUIPMENT_INFO         58 rows exported
+. . exporting table                 EQUIPMENT_INFO         59 rows exported
 . . exporting table                     EQUIP_FUEL        130 rows exported
 . . exporting table                    EQUIP_MAINT         55 rows exported
 . . exporting table                    FMS_COMPANY          3 rows exported
@@ -42,15 +42,15 @@ About to export FMSDEV's objects ...
 . . exporting table                      FUEL_CARD          1 rows exported
 . . exporting table                    FUEL_RELOAD         36 rows exported
 . . exporting table                       FUEL_TRX         16 rows exported
-. . exporting table                        INVOICE        604 rows exported
+. . exporting table                        INVOICE        605 rows exported
 . . exporting table                      LOCATIONS         50 rows exported
-. . exporting table                     ORDER_INFO       9670 rows exported
+. . exporting table                     ORDER_INFO       9687 rows exported
 . . exporting table                 SHIP_TO_MASTER        411 rows exported
 . . exporting table                   SUPP_INVOICE          0 rows exported
-. . exporting table                       SUPP_TRX       3044 rows exported
+. . exporting table                       SUPP_TRX       3060 rows exported
 . . exporting table                   SUPP_TRX_BAK         94 rows exported
 . . exporting table                   TARIFF_CODES         18 rows exported
-. . exporting table                   TARIFF_RATES       6076 rows exported
+. . exporting table                   TARIFF_RATES       6089 rows exported
 . exporting synonyms
 . exporting views
 . exporting stored procedures
